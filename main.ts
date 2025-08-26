@@ -1,7 +1,10 @@
 enum RadioMessage {
     StartTijd = 340,
     Finish = 5694,
+    Checkpoint3Behaald = 11045,
     rechtdoor = 12848,
+    Checkpoint4Behaald = 14638,
+    Checkpoint2Behaald = 24361,
     Checkpoint1 = 25201,
     links = 30556,
     Checkpoint2 = 32327,
@@ -11,19 +14,26 @@ enum RadioMessage {
     message1 = 49434,
     Checkpoint4 = 53120,
     Start = 56380,
+    Checkpoint1Behaald = 56413,
     rem = 58635,
     Checkpoint3 = 63779
 }
-input.onPinPressed(TouchPin.P2, function () {
-    radio.sendMessage(RadioMessage.Start)
-    if (input.pinIsPressed(TouchPin.P2)) {
-        basic.pause(100)
-    } else {
-        radio.sendMessage(RadioMessage.StartTijd)
-    }
+radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
+    gehaald += 1
+    basic.showLeds(`
+        . . . . #
+        . . . # .
+        # . # . .
+        . # . . .
+        . . . . .
+        `)
 })
-radio.setTransmitPower(7)
+let gehaald = 0
+radio.setTransmitPower(0.1)
 radio.setGroup(35)
+basic.showNumber(1)
 basic.forever(function () {
-	
+    if (gehaald == 0) {
+        radio.sendMessage(RadioMessage.Checkpoint1)
+    }
 })
