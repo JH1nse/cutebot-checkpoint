@@ -18,6 +18,9 @@ enum RadioMessage {
     rem = 58635,
     Checkpoint3 = 63779
 }
+/**
+ * checkpoint 1
+ */
 radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
     gehaald += 1
     basic.showLeds(`
@@ -29,7 +32,7 @@ radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
         `)
 })
 let gehaald = 0
-radio.setTransmitPower(0.1)
+radio.setTransmitPower(0.001)
 radio.setGroup(35)
 basic.showNumber(1)
 basic.forever(function () {
