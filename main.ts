@@ -18,22 +18,69 @@ enum RadioMessage {
     rem = 58635,
     Checkpoint3 = 63779
 }
-radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
+// Als de finish binnenkrijgt dat het behaald is een animatie laten zien en de variabel "Behaald" zetten op 1 (waar) en de variabel "f" zetten op 1 (waar).
+// 
+// "f" regelt het geluidje
+radio.onReceivedMessage(RadioMessage.Checkpoint3Behaald, function () {
     gehaald += 1
-    basic.showLeds(`
-        . . . . #
-        . . . # .
-        # . # . .
-        . # . . .
-        . . . . .
-        `)
+    f += 1
+    for (let index = 0; index < 9999999999999; index++) {
+        basic.showLeds(`
+            # . # . #
+            . # . # .
+            # . # . #
+            . # . # .
+            # . # . #
+            `)
+        basic.pause(100)
+        basic.showLeds(`
+            . # . # .
+            # . # . #
+            . # . # .
+            # . # . #
+            . # . # .
+            `)
+        basic.pause(100)
+    }
 })
+// Als het vorige checkpoint behaald is de hele tijd sturen dat dit de finish is totdat het checkpoint behaald is
+radio.onReceivedMessage(RadioMessage.Checkpoint2Behaald, function () {
+    for (let index = 0; index < 99999999999999; index++) {
+        basic.pause(100)
+        if (gehaald == 0) {
+            radio.sendMessage(RadioMessage.Finish)
+        }
+    }
+})
+/**
+ * finish
+ */
+// Checkpoint resetten, radio configureren en de F van Finish tonen
 let gehaald = 0
-radio.setTransmitPower(0.1)
+let f = 0
+gehaald = 0
+radio.setTransmitPower(0.001)
 radio.setGroup(35)
-basic.showNumber(1)
+basic.showLeds(`
+    # # # # .
+    # . . . .
+    # # # . .
+    # . . . .
+    # . . . .
+    `)
+// Als de finish behaald is een geluidje afspelen
+// 
+// (dit herhaald zich elke 30 seconden na het behalen)
 basic.forever(function () {
-    if (gehaald == 0) {
-        radio.sendMessage(RadioMessage.Checkpoint1)
+    if (f >= 1) {
+        music.play(music.stringPlayable("F - F - F - F - ", 700), music.PlaybackMode.UntilDone)
+        music.play(music.stringPlayable("D D - E E - F - ", 400), music.PlaybackMode.UntilDone)
+        music.play(music.stringPlayable("E E - F F F F F ", 600), music.PlaybackMode.UntilDone)
+        basic.pause(5000)
+        basic.pause(5000)
+        basic.pause(5000)
+        basic.pause(5000)
+        basic.pause(5000)
+        basic.pause(5000)
     }
 })
