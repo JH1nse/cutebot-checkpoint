@@ -18,9 +18,6 @@ enum RadioMessage {
     rem = 58635,
     Checkpoint3 = 63779
 }
-/**
- * checkpoint 2
- */
 // Als het vorige checkpoint behaald is de hele tijd sturen dat dit een checkpoint is totdat het checkpoint behaald is
 radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
     for (let index = 0; index < 99999999999999; index++) {
@@ -41,9 +38,14 @@ radio.onReceivedMessage(RadioMessage.Checkpoint2Behaald, function () {
         . . . . .
         `)
 })
+/**
+ * checkpoint 2
+ */
 // Checkpoint resetten, radio configureren en de nummer van het checkpoint tonen
 let gehaald = 0
 gehaald = 0
 radio.setTransmitPower(0.001)
 radio.setGroup(35)
+// Let op: omdat het toevoegen van berichten alles reset is het registratie bericht "Checkpoint4" om ervoor te zorgen dat ik niet ALLES opnieuw moet doen :)
+radio.sendMessage(RadioMessage.Checkpoint4)
 basic.showNumber(2)
