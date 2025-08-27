@@ -55,12 +55,14 @@ radio.onReceivedMessage(RadioMessage.Checkpoint2Behaald, function () {
 /**
  * finish
  */
-// Checkpoint resetten, radio configureren en de F van Finish tonen
+// Finish resetten en registreren, radio configureren en de F van Finish tonen
 let gehaald = 0
 let f = 0
 gehaald = 0
 radio.setTransmitPower(0.001)
 radio.setGroup(35)
+// Let op: omdat het toevoegen van berichten alles reset is het registratie bericht "Checkpoint4ehaald" om ervoor te zorgen dat ik niet ALLES opnieuw moet doen :)
+radio.sendMessage(RadioMessage.Checkpoint4Behaald)
 basic.showLeds(`
     # # # # .
     # . . . .
