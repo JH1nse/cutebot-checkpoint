@@ -32,10 +32,12 @@ radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
         . . . . .
         `)
 })
-// Checkpoint resetten, radio configureren en de nummer van het checkpoint tonen
+// Checkpoint resetten en registreren, radio configureren en de nummer van het checkpoint tonen
 let gehaald = 0
 radio.setTransmitPower(0.001)
 radio.setGroup(35)
+// Let op: omdat het toevoegen van berichten alles reset is het registratie bericht "Checkpoint3" om ervoor te zorgen dat ik niet ALLES opnieuw moet doen :)
+radio.sendMessage(RadioMessage.Checkpoint3)
 basic.showNumber(1)
 // De hele tijd sturen dat dit een checkpoint is totdat het checkpoint behaald is
 basic.forever(function () {
