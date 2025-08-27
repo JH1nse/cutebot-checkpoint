@@ -18,7 +18,20 @@ enum RadioMessage {
     rem = 58635,
     Checkpoint3 = 63779
 }
+/**
+ * checkpoint 2
+ */
+// Als het vorige checkpoint behaald is de hele tijd sturen dat dit een checkpoint is totdat het checkpoint behaald is
 radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
+    for (let index = 0; index < 99999999999999; index++) {
+        basic.pause(100)
+        if (gehaald == 0) {
+            radio.sendMessage(RadioMessage.Checkpoint2)
+        }
+    }
+})
+// Als het checkpoint binnenkrijgt dat het behaald is een vinkje laten zien en de variabel "Behaald" zetten op 1 (waar)
+radio.onReceivedMessage(RadioMessage.Checkpoint2Behaald, function () {
     gehaald += 1
     basic.showLeds(`
         . . . . #
@@ -28,12 +41,9 @@ radio.onReceivedMessage(RadioMessage.Checkpoint1Behaald, function () {
         . . . . .
         `)
 })
+// Checkpoint resetten, radio configureren en de nummer van het checkpoint tonen
 let gehaald = 0
-radio.setTransmitPower(0.1)
+gehaald = 0
+radio.setTransmitPower(0.001)
 radio.setGroup(35)
-basic.showNumber(1)
-basic.forever(function () {
-    if (gehaald == 0) {
-        radio.sendMessage(RadioMessage.Checkpoint1)
-    }
-})
+basic.showNumber(2)
